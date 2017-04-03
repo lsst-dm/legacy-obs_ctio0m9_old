@@ -95,7 +95,7 @@ class Ctio0m9(cameraGeom.Camera):
         detector0Config.detectorType = 0
         # This is the orientation we need to put the serial direciton along the x-axis
         detector0Config.bbox_x0 = 0
-        detector0Config.bbox_x1 = 2168
+        detector0Config.bbox_x1 = 2048
         detector0Config.bbox_y0 = 0
         detector0Config.bbox_y1 = 2048
         detector0Config.pixelSize_x = 0.01  # in mm
@@ -139,56 +139,83 @@ class Ctio0m9(cameraGeom.Camera):
                 print('Amp Name : %s, %s'%(ampX, ampY))
 
                 if((ampX == 1) & (ampY == 1)):
-                    record.setBBox(afwGeom.Box2I(afwGeom.Point2I(10, 0),
+                    record.setBBox(afwGeom.Box2I(afwGeom.Point2I(0, 0),
                                                  afwGeom.Extent2I(extended, extended),))
-                    record.setRawVerticalOverscanBBox(afwGeom.Box2I(
+                    record.setRawHorizontalOverscanBBox(afwGeom.Box2I(
                         afwGeom.Point2I(1044, 0),
                         afwGeom.Extent2I(x_overscan, extended),))   
                     record.setRawXYOffset(\
                         afwGeom.Extent2I(1084, 1024))
-
+                    # bias region
+                    record.setRawBBox(afwGeom.Box2I(
+                        afwGeom.Point2I(10, 0),
+                        afwGeom.Extent2I(extended, extended),
+                    ))
+                    record.setRawDataBBox(afwGeom.Box2I(
+                        afwGeom.Point2I(10,0),
+                        afwGeom.Extent2I(extended, extended),
+                    ))
+                
                     
                 if((ampX == 1) & (ampY == 2)):
-                    record.setBBox(afwGeom.Box2I(afwGeom.Point2I(1134, 0),
+                    record.setBBox(afwGeom.Box2I(afwGeom.Point2I(1024, 0),
                                                  afwGeom.Extent2I(extended, extended),))
-                    record.setRawVerticalOverscanBBox(afwGeom.Box2I(
+                    record.setRawHorizontalOverscanBBox(afwGeom.Box2I(
                         afwGeom.Point2I(1084, 0),
                         afwGeom.Extent2I(x_overscan, extended),))   
                     record.setRawXYOffset(\
                         afwGeom.Extent2I(1084, 1024))
+                    # bias region
+                    record.setRawBBox(afwGeom.Box2I(
+                        afwGeom.Point2I(1134, 0),
+                        afwGeom.Extent2I(extended, extended),
+                    ))
+                    record.setRawDataBBox(afwGeom.Box2I(
+                        afwGeom.Point2I(1134,0),
+                        afwGeom.Extent2I(extended, extended),
+                    ))
 
                     
                 if((ampX == 2) & (ampY == 1)):
-                    record.setBBox(afwGeom.Box2I(afwGeom.Point2I(10, 1024),
+                    record.setBBox(afwGeom.Box2I(afwGeom.Point2I(0, 1024),
                                                  afwGeom.Extent2I(extended, extended),))
-                    record.setRawVerticalOverscanBBox(afwGeom.Box2I(
+                    record.setRawHorizontalOverscanBBox(afwGeom.Box2I(
                         afwGeom.Point2I(1044, 1024),
                         afwGeom.Extent2I(x_overscan, extended),))   
                     record.setRawXYOffset(\
                         afwGeom.Extent2I(1084, 1024))
+                    # bias region
+                    record.setRawBBox(afwGeom.Box2I(
+                        afwGeom.Point2I(10, 1024),
+                        afwGeom.Extent2I(extended, extended),
+                    ))
+                    record.setRawDataBBox(afwGeom.Box2I(
+                        afwGeom.Point2I(10,1024),
+                        afwGeom.Extent2I(extended, extended),
+                    ))
 
                     
                 if((ampX == 2) & (ampY == 2)):
-                    record.setBBox(afwGeom.Box2I(afwGeom.Point2I(1134, 1024),
+                    record.setBBox(afwGeom.Box2I(afwGeom.Point2I(1024, 1024),
                                                  afwGeom.Extent2I(extended, extended),))
-                    record.setRawVerticalOverscanBBox(afwGeom.Box2I(
+                    record.setRawHorizontalOverscanBBox(afwGeom.Box2I(
                         afwGeom.Point2I(1084, 1024),
                         afwGeom.Extent2I(x_overscan, extended),))   
                     record.setRawXYOffset(\
                         afwGeom.Extent2I(1084, 1024))
+                    # bias region
+                    record.setRawBBox(afwGeom.Box2I(
+                        afwGeom.Point2I(1134, 1024),
+                        afwGeom.Extent2I(extended, extended),
+                    ))
+                    record.setRawDataBBox(afwGeom.Box2I(
+                        afwGeom.Point2I(1134,1024),
+                        afwGeom.Extent2I(extended, extended),
+                    ))
 
                     
                 readCorner = LL  # in raw frames; always LL because raws are in amp coords
-                # bias region
-                record.setRawBBox(afwGeom.Box2I(
-                    afwGeom.Point2I(0, 0),
-                    afwGeom.Extent2I(extended, extended),
-                ))
-                record.setRawDataBBox(afwGeom.Box2I(
-                    afwGeom.Point2I(0,0),
-                    afwGeom.Extent2I(extended, extended),
-                ))
-                
+        
                 
                 record.setReadoutCorner(readCorner)
                 record.setGain(self.gain[(ampX, ampY)])
